@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoreboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="container mx-auto p-6 bg-gray-100 min-h-screen">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-blue-700">Scoreboard: {{ details.ctf_name }}</h1>
+        <a href="/event/{{ details.ctf_id }}" class="btn btn-primary bg-blue-600 text-white px-4 py-2 rounded">Back to
+            Event</a>
+    </div>
+
+    <div class="mb-4">
+        <p>Total Teams: {{ details.ctf_teams }} | Total Players: {{ details.ctf_players }} | Event Ended: {{ 'Yes' if
+            details.is_ended else 'No'
+            }}</p>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="table table-striped table-hover bg-white rounded shadow w-full">
+            <thead class="bg-blue-600 text-white">
+                <tr>
+                    <th>Position</th>
+                    <th>Team</th>
+                    <th>Avatar</th>
+                    <th>Points</th>
+                    <th>Owned Flags</th>
+                    <th>Total Flags</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for team in details.scores %}
+                <tr class="{% if team.id == details.participating_team.id %}bg-green-100{% endif %}">
+                    <td>{{ loop.index }}</td>
+                    <td>{{ team.name }}</td>
+                    <td><img src="{{ team.avatar }}" alt="Avatar" class="w-10 h-10 rounded-full"></td>
+                    <td>{{ team.points }}</td>
+                    <td>{{ team.owned_flags }}</td>
+                    <td>{{ team.total_flags }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

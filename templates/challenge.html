@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ chal.name }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="container mx-auto p-6 bg-gray-100 min-h-screen">
+    <div class="mt-4">
+        <a href="/event/{{ event_id }}" class="text-blue-600 underline">&larr; Back to Event</a>
+    </div>
+    <h2 class="text-3xl font-bold mb-4 text-blue-700">Challenge {{ chal.name }}</h2>
+    <p>{{ chal.description }}</p>
+    <p>Points: <strong>{{ chal.points }}</strong></p>
+
+    <p>Creator: <strong>{{ chal.creator }}</strong></p>
+    <p>Difficulty: <strong>{{ chal.difficulty }}</strong></p>
+    <p>Category: <strong>{{ categorie_name(chal.challenge_category_id) }}</strong></p>
+    <p>Solves: <strong>{{ chal.solves }}</strong></p>
+
+    {% if chal.hasDocker %}
+    <h3>Docker Environment</h3>
+    <div class="flex space-x-2 mb-2">
+        <a href="/start_container/{{ chal.id }}" class="btn btn-success bg-green-600 text-white px-4 py-2 rounded">Start
+            Docker</a>
+        <a href="/stop_container/{{ chal.id }}" class="btn btn-danger bg-red-600 text-white px-4 py-2 rounded">Stop
+            Docker</a>
+    </div>
+    <p>IP/Port:</p>
+    <ul class="list-disc list-inside mb-2">
+        {% if chal.docker_ports %}
+        {% for port in chal.docker_ports %}
+        <li><code>{{ chal.hostname }}:{{ port }}</code></li>
+        {% endfor %}
+        {% else %}
+        <li>Not available</li>
+        {% endif %}
+    </ul>
+    {% endif %}
+
+    <h3>Files</h3>
+    <ul class="list-group mb-4">
+        {% if chal.filename %}
+        <li class="list-group-item flex justify-between items-center">
+            <a href="{{ download_link.url }}">{{ chal.filename }}</a>
+        </li>
+        {% endif %}
+    </ul>
+
+    {% if chal.flagsInfo %}
+    <form method="POST" action="/submit_flag/{{ chal.id }}">
+        {% for flag in chal.flagsInfo %}
+        {% if flag.solved %}
+        <p class="text-green-600 font-bold">Flag already solved!</p>
+        {% else %}
+        <div class="mb-2">
+            <input type="text" name="flag" placeholder="HTB{...}" required
+                class="border border-gray-300 rounded px-3 py-2 w-full">
+            <button class="btn btn-primary bg-blue-600 text-white px-4 py-2 rounded" type="submit">Submit</button>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </form>
+    {% else %}
+    <p>No flag submission required for this challenge.</p>
+    {% endif %}
+</body>
+
+</html>

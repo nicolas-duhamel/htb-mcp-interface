@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Error</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="container mx-auto p-6 bg-red-100 min-h-screen">
+    <h2 class="text-3xl font-bold mb-4 text-red-700">An Error Occurred</h2>
+    <div class="bg-white p-4 rounded shadow border border-red-300">
+        <p class="text-red-600 font-semibold">{{ error.get('error', 'Unknown Error') }}</p>
+        <p>{{ error.get('error_description', '') }}</p>
+        <div class="mt-2 space-x-2">
+            <a href="/" class="btn btn-primary bg-blue-600 text-white px-4 py-2 rounded inline-block">Home page</a>
+            <a href="/login" class="btn btn-primary bg-blue-600 text-white px-4 py-2 rounded inline-block">Login
+                Page</a>
+            <a href="javascript:history.back()"
+                class="btn btn-secondary bg-gray-500 text-white px-4 py-2 rounded inline-block">Go Back</a>
+        </div>
+    </div>
+</body>
+
+</html>
