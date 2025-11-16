@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>HTB CTF MCP</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="container mx-auto p-6 bg-gray-100 min-h-screen">
+    <h2 class="text-3xl font-bold mb-4 text-blue-700">Available CTF Events (with MCP support)</h2>
+    <ul class="list-group mb-4">
+        {% for event in events %}
+        {% if event.status == 'Ongoing' and event.mcp_access_mode != 'no_mcp' %}
+        <li class="list-group-item flex justify-between items-center">
+            {{ event.name }}
+            <div class="space-x-2">
+                <a href="/join/{{ event.id }}" class="btn btn-sm btn-success">Register</a>
+                <a href="/event/{{ event.id }}" class="btn btn-sm btn-primary">View</a>
+            </div>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
