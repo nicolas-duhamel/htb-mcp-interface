@@ -50,19 +50,20 @@
     </ul>
 
     {% if chal.flagsInfo %}
+    {% for flag in chal.flagsInfo %}
+    {% if flag.solved %}
+    <p class="text-green-600 font-bold">Flag already solved!</p>
+    {% else %}
     <form method="POST" action="/submit_flag/{{ chal.id }}">
-        {% for flag in chal.flagsInfo %}
-        {% if flag.solved %}
-        <p class="text-green-600 font-bold">Flag already solved!</p>
-        {% else %}
         <div class="mb-2">
+            {{ flag.question }}
             <input type="text" name="flag" placeholder="HTB{...}" required
                 class="border border-gray-300 rounded px-3 py-2 w-full">
             <button class="btn btn-primary bg-blue-600 text-white px-4 py-2 rounded" type="submit">Submit</button>
         </div>
-        {% endif %}
-        {% endfor %}
     </form>
+    {% endif %}
+    {% endfor %}
     {% else %}
     <p>No flag submission required for this challenge.</p>
     {% endif %}
